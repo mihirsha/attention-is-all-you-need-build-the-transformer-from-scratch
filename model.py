@@ -131,7 +131,7 @@ def build_sinusoidal_positional_encoding(max_len, d_model):
     
     pos = torch.arange(0, max_len).unsqueeze(1)
     even_p = torch.arange(0, d_model, 2, dtype=torch.float32)
-    div_term = torch.exp(even_p * (-math.log(10000))/d_model)
+    div_term = torch.exp(-(even_p * math.log(10000))/d_model)
 
     even_pos = torch.arange(0, d_model, 2, dtype=torch.float32)
     odd_pos = torch.arange(1, d_model, 2, dtype=torch.float32)
