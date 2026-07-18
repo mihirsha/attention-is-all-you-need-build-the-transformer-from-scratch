@@ -159,7 +159,7 @@ def build_padding_mask(token_ids, pad_id):
     """Return a (B, 1, 1, L) bool mask: True where token_ids != pad_id."""
     # TODO: build a boolean mask marking non-pad positions, shaped for broadcasting against attention scores
     mask = (token_ids != pad_id)
-    mask = mask.unsqueeze(1).unsqueeze(1)
+    mask = mask.unsqueeze(1).unsqueeze(2)
 
     return mask
 
