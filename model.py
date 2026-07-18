@@ -256,7 +256,7 @@ def split_last_dim_into_heads(tensor, num_heads):
     # TODO: reshape (B, L, d_model) into (B, L, num_heads, d_model // num_heads)
     B, L, d_model = tensor.shape
     d_k = d_model // num_heads
-    return tensor.view(B, L, num_heads, d_k)
+    return tensor.reshape(B, L, num_heads, d_k)
 
 # Step 24 - transpose_heads_before_sequence (not yet solved)
 # TODO: implement
