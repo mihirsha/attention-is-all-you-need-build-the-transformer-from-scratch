@@ -277,7 +277,7 @@ def merge_heads_back_to_model_dim(multi_head_tensor):
 
     d_model = num_heads * d_k
 
-    return multi_head_tensor.reshape(B, L, d_model)
+    return multi_head_tensor.contiguous().view(B, L, d_model)
 
 # Step 26 - apply_linear_projection (not yet solved)
 # TODO: implement
