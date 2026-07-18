@@ -372,54 +372,6 @@ def assemble_multi_head_attention_forward(
 
     # Second, transpose the sequence and head dimensions
     # Shape becomes: (batch_size, num_heads, seq_len, d_k)
-    q_proj = q_proj.transpose(-1, -2)
-    k_proj = k_proj.transpose(-1, -2)
-    v_proj = v_proj.transpose(-1, -2)
-
-    # calculate scores
-    scores = q_proj @ k_proj.transpose(-1, -2)
-    if mask is not None:
-        scores = scores.masked_fill(mask==False, float("-inf"))
-
-    # scaled_scores
-    atten_weight = F.softmax(scores / math.sqrt(d_k))
-    if mask is not None:
-        atten_weight = torch.nan_to_num(atten_weight, nan=0.0)
-    
-    # calculate context
-    context = atten_weight @ v_proj
-
-    # calculate linear projection
-    import torch
-import torch.nn.functional as F
-import math
-
-def assemble_multi_head_attention_forward(
-    query, key, value, w_q, w_k, w_v, w_o, num_heads, mask=None
-    ):
-    # TODO: project Q/K/V, split into heads, run scaled dot-product attention, merge heads, output projection.
-    batch_size = query.shape[0]
-    d_model = key.shape[-1]
-    seq_len_q = query.shape[-2]
-    seq_len_k = key.shape[-2]
-
-    # calculate head dimension
-    d_k =  d_model // num_heads
-
-    # linear projection (Your code here is perfect)
-    q_proj = query @ w_q
-    k_proj = key @ w_k
-    v_proj = value @ w_v
-    
-    # step 1: split q/k/v into multihead
-    # First, reshape to split d_model into (num_heads, d_k)
-    # Shape becomes: (batch_size, seq_len, num_heads, d_k)
-    q_proj = q_proj.reshape(batch_size, seq_len_q, num_heads, d_k)
-    k_proj = k_proj.reshape(batch_size, seq_len_k, num_heads, d_k)
-    v_proj = v_proj.reshape(batch_size, seq_len_k, num_heads, d_k)
-
-    # Second, transpose the sequence and head dimensions
-    # Shape becomes: (batch_size, num_heads, seq_len, d_k)
     q_proj = q_proj.transpose(-2, -3)
     k_proj = k_proj.transpose(-2, -3)
     v_proj = v_proj.transpose(-2, -3)
