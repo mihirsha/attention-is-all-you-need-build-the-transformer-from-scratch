@@ -403,8 +403,13 @@ def assemble_multi_head_attention_forward(
 
     return output
 
-# Step 32 - apply_ffn_first_linear_and_relu (not yet solved)
-# TODO: implement
+# Step 32 - apply_ffn_first_linear_and_relu
+import torch.nn.functional as F
+def apply_ffn_first_linear_and_relu(x, w1, b1):
+    # TODO: project x by w1, add b1, then apply a ReLU activation.
+    hidden_states = (x @ w1) + b1
+    output = F.relu(hidden_states)
+    return output
 
 # Step 33 - apply_ffn_second_linear (not yet solved)
 # TODO: implement
