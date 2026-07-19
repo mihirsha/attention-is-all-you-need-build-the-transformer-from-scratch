@@ -460,8 +460,16 @@ def apply_residual_add_and_norm(residual_input, sublayer_output, gamma, beta, ep
         eps
     )
 
-# Step 38 - apply_dropout_with_keep_mask (not yet solved)
-# TODO: implement
+# Step 38 - apply_dropout_with_keep_mask
+def apply_dropout_with_keep_mask(x, keep_mask, keep_prob):
+    # TODO: multiply x by the boolean keep_mask and rescale by 1/keep_prob.
+    # Step 1: Zero out the dropped elements
+    dropped_x = x * keep_mask
+    
+    # Step 2: Rescale the surviving elements
+    output = dropped_x / keep_prob
+    
+    return output
 
 # Step 39 - encoder_layer_self_attention_sublayer (not yet solved)
 # TODO: implement
